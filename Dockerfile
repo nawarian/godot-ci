@@ -11,18 +11,18 @@ RUN apt-get update \
     && unzip godot.zip \
     && rm godot.zip \
     && mv Godot_v${GODOT_VERSION}_linux_headless.64 /usr/local/bin/godot \
-    && mkdir -p /root/.local/share/godot/templates/${GODOT_VERSION} \
+    && mkdir -p ${HOME}/.local/share/godot/templates/${GODOT_VERSION} \
     && wget -O export_templates.tpz https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz --no-check-certificate \
-    && unzip export_templates.tpz -d /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED} \
-    && mv /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/templates/webassembly* /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/ \
-    && rm -rf /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/templates/*
+    && unzip export_templates.tpz -d ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED} \
+    && mv ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/templates/webassembly* ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/ \
+    && rm -rf ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/templates/*
 
 FROM ubuntu:22.04
 
 ENV GODOT_VERSION_DOTTED=3.6.beta4
 
 COPY --from=0 /usr/local/bin/godot /usr/local/bin
-COPY --from=0 /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/ /root/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/
+COPY --from=0 ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/ ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/
 
 WORKDIR /app
 
