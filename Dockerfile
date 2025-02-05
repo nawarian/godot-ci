@@ -1,9 +1,12 @@
 FROM ubuntu:22.04
 
-ENV GODOT_VERSION=3.6-beta4
-ENV GODOT_VERSION_DOTTED=3.6.beta4
+ARG HOME=/root
+ENV GODOT_VERSION=3.6-stable
+ENV GODOT_VERSION_DOTTED=3.6.stable
 
 WORKDIR /opt
+
+# ${HOME}/.local/share/godot/templates/3.6.stable/templates/webassembly_
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends wget unzip \
@@ -19,7 +22,10 @@ RUN apt-get update \
 
 FROM ubuntu:22.04
 
-ENV GODOT_VERSION_DOTTED=3.6.beta4
+ARG HOME=/root
+ENV GODOT_VERSION_DOTTED=3.6.stable
+
+RUN mkdir -p ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/
 
 COPY --from=0 /usr/local/bin/godot /usr/local/bin
 COPY --from=0 ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/ ${HOME}/.local/share/godot/templates/${GODOT_VERSION_DOTTED}/
