@@ -6,8 +6,6 @@ ENV GODOT_VERSION_DOTTED=3.6.stable
 
 WORKDIR /opt
 
-# ${HOME}/.local/share/godot/templates/3.6.stable/templates/webassembly_
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends wget unzip \
     && wget -O godot.zip https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux_headless.64.zip --no-check-certificate \
